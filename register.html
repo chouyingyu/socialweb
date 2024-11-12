@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人檔案 - 泡泡糖社交</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="header">
+    <h1>個人檔案</h1>
+    <nav>
+        <a href="index.html">返回首頁</a>
+    </nav>
+</header>
+
+<div class="profile-section">
+    <h2>我的貼文</h2>
+    <div class="post-list" id="postList">
+        <!-- 貼文會顯示在這裡 -->
+    </div>
+</div>
+
+<script>
+    // 載入使用者的所有貼文
+    document.addEventListener("DOMContentLoaded", loadUserPosts);
+
+    function loadUserPosts() {
+        const postList = document.getElementById('postList');
+        postList.innerHTML = ''; // 清空列表
+
+        const posts = JSON.parse(localStorage.getItem("posts")) || []; // 從 Local Storage 獲取貼文
+        posts.forEach(post => {
+            const postCard = document.createElement('div');
+            postCard.className = 'post-card';
+            postCard.innerHTML = `
+                <div class="post-content">
+                    <p>${post.content}</p>
+                    <span class="post-time">${post.time}</span>
+                </div>
+            `;
+            postList.appendChild(postCard); // 按順序添加貼文
+        });
+    }
+</script>
+</body>
+</html>
