@@ -1,68 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>Social Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>泡泡糖社交</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h2>登入</h2>
-    <input id="login-username" placeholder="Username">
-    <input id="login-password" placeholder="Password" type="password">
-    <button onclick="login()">Login</button>
+<header class="header">
+    <h1>泡泡糖社交</h1>
+    <nav>
+        <a href="register.html" class="profile-button">個人檔案</a>
+    </nav>
+</header>
 
-    <h2>註冊</h2>
-    <input id="register-username" placeholder="Username">
-    <input id="register-password" placeholder="Password" type="password">
-    <button onclick="register()">Register</button>
+<div class="post-section">
+    <h2>創建新貼文</h2>
+    <textarea id="postContent" placeholder="你在想什麼？" rows="3"></textarea>
+    <button onclick="createPost()">發表</button>
+</div>
 
-    <h2>發布貼文</h2>
-    <input id="post-content" placeholder="What's on your mind?">
-    <button onclick="post()">Post</button>
+<div class="blog-container" id="feedContainer">
+    <!-- 貼文會顯示在這裡 -->
+</div>
 
-    <h2>貼文區域</h2>
-    <div id="posts"></div>
+<script>
+    document.addEventListener("DOMContentLoaded", loadPosts);
 
-    <script>
-        let token = '';
+    function createPost() {
+        const content = document.getElementById('postContent').value;
+        const user_id = 1; // 假設使用者 ID 已經取得並存儲在此處，實際應從登入資訊中取得
 
-        async function register() {
-            const username = document.getElementById("register-username").value;
-            const password = document.getElementById("register-password").value;
-            const response = await fetch('http://localhost:3000/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
-            });
-            if (response.ok) alert("User registered successfully");
-        }
-
-        async function login() {
-            const username = document.getElementById("login-username").value;
-            const password = document.getElementById("login-password").value;
-            const response = await fetch('http://localhost:3000/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
-            });
-            const data = await response.json();
-            if (response.ok) token = data.token;
-            alert("Logged in successfully");
-        }
-
-        async function post() {
-            const content = document.getElementById("post-content").value;
-            await fetch('http://localhost:3000/post', {
+        if (content) {
+            fetch('/createPost', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': token
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ content })
+                body: JSON.stringify({ user_id, content })
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    alert('發文成功！');
+                    loadPosts(); // 刷新貼文列表
+                    document.getElementById('postContent').value = ''; // 清空輸入框
+                } else {
+                    alert(result.message || '發文失敗，請重試');
+                }
+            })
+            .catch(error => {
+                console.error('發文錯誤:', error);
+                alert('發文失敗，請檢查伺服器連線');
             });
-            alert("Post created");
+        } else {
+            alert('請寫些內容再發表！');
         }
+    }
 
-        // 更多功能的JavaScript函數（如按讚、留言）可在這裡繼續擴充
-    </script>
+    function loadPosts() {
+        const feedContainer = document.getElementById('feedContainer');
+        feedContainer.innerHTML = '';
+        const posts = JSON.parse(localStorage.getItem("posts")) || [];
+
+        posts.forEach((post, index) => {
+            const postCard = document.createElement('div');
+            postCard.className = 'post-card';
+            postCard.innerHTML = `
+                <div class="post-content">
+                    <p>${post.content}</p>
+                    <span class="post-time">${post.time}</span>
+                </div>
+                <div class="interaction-buttons">
+                    <button onclick="likePost(${index})">👍 按讚 (${post.likes})</button>
+                    <button onclick="toggleCommentSection(${index})">💬 留言</button>
+                </div>
+                <div class="comments-section" id="comments-${index}" style="display: none;">
+                    <textarea id="commentInput-${index}" placeholder="寫下你的留言..." rows="2"></textarea>
+                    <button onclick="addComment(${index})">添加留言</button>
+                    <div class="comments-list">
+                        ${post.comments.map(comment => `<p>${comment}</p>`).join('')}
+                    </div>
+                </div>
+            `;
+            feedContainer.appendChild(postCard);
+        });
+    }
+
+    function likePost(index) {
+        const posts = JSON.parse(localStorage.getItem("posts"));
+        posts[index].likes += 1;
+        localStorage.setItem("posts", JSON.stringify(posts));
+        loadPosts();
+    }
+
+    function toggleCommentSection(index) {
+        const commentSection = document.getElementById(`comments-${index}`);
+        commentSection.style.display = commentSection.style.display === "none" ? "block" : "none";
+    }
+
+    function addComment(index) {
+        const commentInput = document.getElementById(`commentInput-${index}`);
+        const comment = commentInput.value;
+        if (comment) {
+            const posts = JSON.parse(localStorage.getItem("posts"));
+            posts[index].comments.push(comment);
+            localStorage.setItem("posts", JSON.stringify(posts));
+            commentInput.value = '';
+            loadPosts();
+        } else {
+            alert('請寫些內容再留言！');
+        }
+    }
+</script>
 </body>
 </html>
+
