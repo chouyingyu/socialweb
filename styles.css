@@ -1,0 +1,247 @@
+/* 全局樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #e6e8e9;
+    color: #4a4e50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 18px;
+}
+
+/* 登入容器樣式 */
+.auth-container {
+    background: #fdfdfd;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.auth-container h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #4a4e50;
+}
+
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-container label {
+    margin-bottom: 5px;
+    color: #4a4e50;
+    text-align: left;
+}
+
+.auth-container input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #cdd7db;
+    background-color: #e8ebec;
+    color: #4a4e50;
+}
+
+.auth-container button {
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #8fa7b3;
+    color: #fdfdfd;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.auth-container button:hover {
+    background-color: #738f9a;
+}
+
+.auth-container p {
+    margin-top: 10px;
+}
+
+.auth-container a {
+    color: #8fa7b3;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.auth-container a:hover {
+    color: #738f9a;
+}
+
+/* 頁眉樣式 */
+.header {
+    background-color: #a8bfc9;
+    color: #fdfdfd;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #cdd7db;
+}
+
+.header h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.header nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.header nav a {
+    color: #fdfdfd;
+    text-decoration: none;
+    font-size: 1.2em;
+    padding: 5px 10px;
+    transition: color 0.3s;
+}
+
+.header nav a:hover {
+    color: #dfe5e7;
+}
+
+/* 個人檔案區域樣式 */
+.profile-section {
+    background: #fdfdfd;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.profile-section h2 {
+    font-size: 1.8em;
+    color: #4a4e50;
+    margin-bottom: 15px;
+}
+
+/* 貼文列表區域 */
+.post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 貼文卡片樣式 */
+.post-card {
+    background-color: #fdfdfd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border: 1px solid #cdd7db;
+}
+
+.post-content {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #4a4e50;
+}
+
+.post-time {
+    color: #a0a9ac;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+/* 發文區樣式 */
+.post-section {
+    background: #fdfdfd;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.post-section textarea {
+    width: 100%;
+    resize: none;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #cdd7db;
+    margin-bottom: 10px;
+    background-color: #e8ebec;
+    color: #4a4e50;
+}
+
+.post-section button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #8fa7b3;
+    color: #fdfdfd;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.post-section button:hover {
+    background-color: #738f9a;
+}
+
+/* 部落格容器 */
+.blog-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+}
+
+/* 留言區樣式 */
+.comments-section {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #e0e5e6;
+    background-color: #f7f9fa;
+}
+
+.comments-section textarea {
+    width: 100%;
+    resize: none;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #cdd7db;
+    margin-bottom: 5px;
+    background-color: #e8ebec;
+    color: #4a4e50;
+}
+
+.comments-list p {
+    padding: 5px;
+    background: #e6e8e9;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    color: #4a4e50;
+}
+
+/* 按鈕互動樣式 */
+.interaction-buttons button {
+    background: none;
+    border: none;
+    color: #8fa7b3;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 1em;
+}
+
+.interaction-buttons button:hover {
+    color: #738f9a;
+}
