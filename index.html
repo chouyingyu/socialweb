@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Social Platform</title>
+</head>
+<body>
+    <h2>登入</h2>
+    <input id="login-username" placeholder="Username">
+    <input id="login-password" placeholder="Password" type="password">
+    <button onclick="login()">Login</button>
+
+    <h2>註冊</h2>
+    <input id="register-username" placeholder="Username">
+    <input id="register-password" placeholder="Password" type="password">
+    <button onclick="register()">Register</button>
+
+    <h2>發布貼文</h2>
+    <input id="post-content" placeholder="What's on your mind?">
+    <button onclick="post()">Post</button>
+
+    <h2>貼文區域</h2>
+    <div id="posts"></div>
+
+    <script>
+        let token = '';
+
+        async function register() {
+            const username = document.getElementById("register-username").value;
+            const password = document.getElementById("register-password").value;
+            const response = await fetch('http://localhost:3000/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+            if (response.ok) alert("User registered successfully");
+        }
+
+        async function login() {
+            const username = document.getElementById("login-username").value;
+            const password = document.getElementById("login-password").value;
+            const response = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+            const data = await response.json();
+            if (response.ok) token = data.token;
+            alert("Logged in successfully");
+        }
+
+        async function post() {
+            const content = document.getElementById("post-content").value;
+            await fetch('http://localhost:3000/post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token
+                },
+                body: JSON.stringify({ content })
+            });
+            alert("Post created");
+        }
+
+        // 更多功能的JavaScript函數（如按讚、留言）可在這裡繼續擴充
+    </script>
+</body>
+</html>
